@@ -28,12 +28,16 @@ services:
     container_name: memorial_temporal
     restart: unless-stopped
     environment:
-      - DB=postgresql
+      - DB=postgres12
       - DB_PORT=5432
       - POSTGRES_USER=temporal
       - POSTGRES_PWD=temporal
       - POSTGRES_SEEDS=postgres
       - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+      - DBNAME=temporal
+      - VISIBILITY_DBNAME=temporal_visibility
+    volumes:
+      - ./config/dynamicconfig:/etc/temporal/config/dynamicconfig
     ports:
       - "7233:7233"
       - "8233:8233"
