@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  # MongoDB
+  mongo:
+    image: mongo:7-jammy
+    container_name: memorial_mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
+      MONGO_INITDB_DATABASE: memorial_development
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - memorial_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/memorial_development --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Temporal Server
+  temporal:
+    image: temporalio/auto-setup:1.25.1
+    container_name: memorial_temporal
+    restart: unless-stopped
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgres
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+    ports:
+      - "7233:7233"
+      - "8233:8233"
+    depends_on:
+      - postgres
+    networks:
+      - memorial_network
+
+  # PostgreSQL para Temporal
+  postgres:
+    image: postgres:16-alpine
+    container_name: memorial_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - memorial_network
+
+  # Redis para cache/sessions
+  redis:
+    image: redis:7-alpine
+    container_name: memorial_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - memorial_network
+
+  # Rails Web
+  web:
+    build:
+      context: .
+      dockerfile: docker/rails/Dockerfile
+    container_name: memorial_web
+    restart: unless-stopped
+    command: bash -c "bundle exec rails db:create db:migrate 2>&1 | tail -5; bundle exec rails server -b 0.0.0.0 -p 3000"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - MONGODB_URI=mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-changeme}@mongo:27017/memorial_${RAILS_ENV:-development}?authSource=admin
+      - TEMPORAL_HOST=temporal:7233
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_HOST=${OLLAMA_HOST:-host.docker.internal:11434}
+    depends_on:
+      mongo:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - memorial_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Temporal Worker
+  worker:
+    build:
+      context: .
+      dockerfile: docker/rails/Dockerfile
+    container_name: memorial_worker
+    restart: unless-stopped
+    command: bundle exec ruby lib/temporal/worker.rb
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    env_file:
+      - .env
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - MONGODB_URI=mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-changeme}@mongo:27017/memorial_${RAILS_ENV:-development}?authSource=admin
+      - TEMPORAL_HOST=temporal:7233
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_HOST=${OLLAMA_HOST:-host.docker.internal:11434}
+    depends_on:
+      - mongo
+      - temporal
+      - redis
+    networks:
+      - memorial_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Nginx (Frontend leve)
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    container_name: memorial_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    networks:
+      - memorial_network
+
+volumes:
+  mongo_data:
+  postgres_data:
+  redis_data:
+  bundle_cache:
+
+networks:
+  memorial_network:
+    driver: bridge

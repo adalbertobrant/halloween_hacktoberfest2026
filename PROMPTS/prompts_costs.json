@@ -1,0 +1,260 @@
+{
+  "project": "MemorialAvisos - Open-Source Multi-Agent System for Obituary Notices and Memorial Pages",
+  "description": "Multi-agent system for creating respectful memorial pages and notifying family and friends",
+  "metodologia": "Agile (Scrum/Kanban)",
+  "stack": [
+    "Gemma 4 / Gemma 3 (Open-Weight) via Ollama",
+    "MongoDB Atlas (Vector Search)",
+    "Temporal (Workflow Orchestration)",
+    "Browserbase",
+    "SerpApi",
+    "Sentry Agent Tracing",
+    "Render",
+    "Ruby on Rails (Backend)"
+  ],
+  "created_at": "2026-10-27T00:00:00Z",
+  "last_updated": "2026-10-27T00:00:00Z",
+  "prompts": [
+    {
+      "id": "master_prompt",
+      "name": "MASTER_PROMPT.md",
+      "path": "/home/adalberto/git/halloween_hacktoberfest2026/MASTER_PROMPT.md",
+      "type": "orchestrator",
+      "description": "Prompt mestre para orquestração dos 4 agentes com metodologia ágil",
+      "modelo": "orquestrador (gemma4:e4b)",
+      "tokens_estimados": {
+        "input": 4500,
+        "output": 2000
+      },
+      "custo_estimado_usd": {
+        "input": 0.0,
+        "output": 0.0,
+        "total": 0.0,
+        "nota": "Modelos open-weight locais - custo zero ou infraestrutura própria"
+      },
+      "version": "1.0.0",
+      "created_at": "2026-10-27T00:00:00Z",
+      "versao_recomendada": "ollama",
+      "temperatura": 0.3,
+      "ollama_model": "orquestrador (gemma4:e4b)"
+    },
+    {
+      "id": "memorial_agent",
+      "name": "memorial_agent_prompt.md",
+      "path": "/home/adalberto/git/halloween_hacktoberfest2026/agents/memorial_agent_prompt.md",
+      "type": "specialized_agent",
+      "agente": "MemorialAgent - Biógrafo e Memorialista",
+      "description": "Agente especializado em criar tributos memoriais respeitosos e empáticos",
+      "modelo": "gemma4:e4b",
+      "tokens_estimados": {
+        "input": 1200,
+        "output": 800
+      },
+      "custo_estimado_usd": {
+        "input": 0.0,
+        "output": 0.0,
+        "total": 0.0
+      },
+      "version": "1.0.0",
+      "created_at": "2026-10-27T00:00:00Z",
+      "temperatura": 0.3,
+      "versao_recomendada": "ollama",
+      "ollama_model": "gemma4:e4b"
+    },
+    {
+      "id": "event_agent",
+      "name": "event_agent_prompt.md",
+      "path": "/home/adalberto/git/halloween_hacktoberfest2026/agents/event_agent_prompt.md",
+      "type": "specialized_agent",
+      "agente": "EventAgent - Coordenador de Cerimônia e Oferendas",
+      "description": "Agente especializado em organizar logística, horários e opções de oferendas",
+      "modelo": "gemma3:4b",
+      "tokens_estimados": {
+        "input": 1000,
+        "output": 600
+      },
+      "custo_estimado_usd": {
+        "input": 0.0,
+        "output": 0.0,
+        "total": 0.0
+      },
+      "version": "1.0.0",
+      "created_at": "2026-10-27T00:00:00Z",
+      "temperatura": 0.1,
+      "versao_recomendada": "ollama",
+      "ollama_model": "gemma3:4b"
+    },
+    {
+      "id": "webbuilder_agent",
+      "name": "webbuilder_agent_prompt.md",
+      "path": "/home/adalberto/git/halloween_hacktoberfest2026/agents/webbuilder_agent_prompt.md",
+      "type": "specialized_agent",
+      "agente": "WebBuilderAgent - Arquiteto de Página Memorial",
+      "description": "Agente especializado em gerar páginas web memorial com HTML/CSS/JS seguros",
+      "modelo": "gemma4:e4b",
+      "tokens_estimados": {
+        "input": 1500,
+        "output": 1200
+      },
+      "custo_estimado_usd": {
+        "input": 0.0,
+        "output": 0.0,
+        "total": 0.0
+      },
+      "version": "1.0.0",
+      "created_at": "2026-10-27T00:00:00Z",
+      "temperatura": 0.2,
+      "versao_recomendada": "ollama",
+      "ollama_model": "gemma4:e4b"
+    },
+    {
+      "id": "dispatch_agent",
+      "name": "dispatch_agent_prompt.md",
+      "path": "/home/adalberto/git/halloween_hacktoberfest2026/agents/dispatch_agent_prompt.md",
+      "type": "specialized_agent",
+      "agente": "DispatchAgent - Disparador e Notificador",
+      "description": "Agente especializado em notificação respeitosa e segura de contatos",
+      "modelo": "gemma3:4b",
+      "tokens_estimados": {
+        "input": 800,
+        "output": 500
+      },
+      "custo_estimado_usd": {
+        "input": 0.0,
+        "output": 0.0,
+        "total": 0.0
+      },
+      "version": "1.0.0",
+      "created_at": "2026-10-27T00:00:00Z",
+      "temperatura": 0.1,
+      "versao_recomendada": "ollama",
+      "ollama_model": "gemma3:4b"
+    }
+  ],
+  "custos_infraestrutura": {
+    "descricao": "Custos de infraestrutura (podem variar conforme uso)",
+    "itens": [
+      {
+        "servico": "MongoDB Atlas",
+        "categoria": "Banco de Dados + Vector Search",
+        "plano": "Free Tier / M0",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Pode escalar conforme necessário"
+      },
+      {
+        "servico": "Temporal Cloud",
+        "categoria": "Workflow Orchestration",
+        "plano": "Self-hosted ou Cloud",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Recomendado self-hosted inicialmente ou usar temporal.io cloud com free tier"
+      },
+      {
+        "servico": "Render",
+        "categoria": "Hosting & Deploy",
+        "plano": "Free Tier",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Suficiente para MVP"
+      },
+      {
+        "servico": "Browserbase",
+        "categoria": "Browser Automation",
+        "plano": "Free Tier/Créditos",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Verificar créditos disponíveis para hackathon"
+      },
+      {
+        "servico": "SerpApi",
+        "categoria": "Search API",
+        "plano": "Free Tier",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Créditos gratuitos disponíveis"
+      },
+      {
+        "servico": "Sentry",
+        "categoria": "Observabilidade",
+        "plano": "Free Tier",
+        "custo_mensal_usd": 0.0,
+        "observacao": "Suficiente para desenvolvimento"
+      }
+    ],
+    "total_mensal_estimado_usd": 0.0
+  },
+  "metodologia_agil": {
+    "framework": "Scrum adaptado para desenvolvimento com IA",
+    "sprints": [
+      {
+        "sprint": 1,
+        "nome": "Setup e Arquitetura",
+        "duracao": "1-2 dias",
+        "objetivos": [
+          "Configurar ambiente Rails + MongoDB + Temporal",
+          "Criar estrutura de agentes",
+          "Definir modelos de dados"
+        ],
+        "story_points": 8
+      },
+      {
+        "sprint": 2,
+        "nome": "Agentes Core",
+        "duracao": "2-3 dias",
+        "objetivos": [
+          "Implementar MemorialAgent e EventAgent",
+          "Integrar com Gemma (Open-Weight)",
+          "Testes unitários"
+        ],
+        "story_points": 13
+      },
+      {
+        "sprint": 3,
+        "nome": "Geração de Página e Notificações",
+        "duracao": "2-3 dias",
+        "objetivos": [
+          "Implementar WebBuilderAgent e DispatchAgent",
+          "Criar templates HTML seguros",
+          "Sistema de notificações"
+        ],
+        "story_points": 13
+      },
+      {
+        "sprint": 4,
+        "nome": "Orquestração e Segurança",
+        "duracao": "1-2 dias",
+        "objetivos": [
+          "Integrar com Temporal workflows",
+          "Implementar segurança (LGPD/GDPR)",
+          "Observabilidade com Sentry/OpenTelemetry"
+        ],
+        "story_points": 8
+      },
+      {
+        "sprint": 5,
+        "nome": "Testes e Deploy",
+        "duracao": "1-2 dias",
+        "objetivos": [
+          "Testes end-to-end",
+          "Deploy no Render",
+          "Documentação final"
+        ],
+        "story_points": 8
+      }
+    ],
+    "total_story_points": 50
+  },
+  "ollama_mapping": {
+    "disponiveis": [
+      "gemma4:e4b",
+      "gemma3:4b"
+    ],
+    "recomendado": {
+      "MemorialAgent": "gemma4:e4b (0.3)",
+      "WebBuilderAgent": "gemma4:e4b (0.2)",
+      "EventAgent": "gemma3:4b (0.1)",
+      "DispatchAgent": "gemma3:4b (0.1)",
+      "Orquestrador": "gemma4:e4b (0.3)"
+    },
+    "vram": {
+      "gemma4:e4b": "~6.6 GB",
+      "gemma3:4b": "~3.4 GB"
+    }
+  }
+}
