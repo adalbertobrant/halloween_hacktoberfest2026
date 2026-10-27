@@ -1,0 +1,75 @@
+<h1>Criar Memorial</h1>
+
+<%= form_with model: @memorial, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :deceased_name, "Nome do Falecido", class: "form-label" %>
+    <%= f.text_field :deceased_name, class: "form-control", required: true %>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :birth_date, "Data de Nascimento", class: "form-label" %>
+      <%= f.date_field :birth_date, class: "form-control" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :death_date, "Data de Falecimento", class: "form-label" %>
+      <%= f.date_field :death_date, class: "form-control" %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= f.label :memories, "Memórias e Informações", class: "form-label" %>
+    <%= f.text_area :memories, class: "form-control", rows: 5 %>
+  </div>
+  
+  <h3>Velório</h3>
+  <div class="mb-3">
+    <label class="form-label">Local</label>
+    <input type="text" name="velorio[local]" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Endereço</label>
+    <input type="text" name="velorio[endereco]" class="form-control">
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Data</label>
+      <input type="date" name="velorio[data]" class="form-control">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Hora Início</label>
+      <input type="time" name="velorio[hora_inicio]" class="form-control">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Hora Fim</label>
+      <input type="time" name="velorio[hora_fim]" class="form-control">
+    </div>
+  </div>
+  
+  <h3>Sepultamento/Cremação</h3>
+  <div class="mb-3">
+    <label class="form-label">Tipo</label>
+    <select name="sepultamento_cremacao[tipo]" class="form-control">
+      <option value="sepultamento">Sepultamento</option>
+      <option value="cremacao">Cremação</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Local</label>
+    <input type="text" name="sepultamento_cremacao[local]" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Endereço</label>
+    <input type="text" name="sepultamento_cremacao[endereco]" class="form-control">
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Data</label>
+      <input type="date" name="sepultamento_cremacao[data]" class="form-control">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Hora</label>
+      <input type="time" name="sepultamento_cremacao[hora]" class="form-control">
+    </div>
+  </div>
+  
+  <%= f.submit "Criar Memorial", class: "btn btn-primary" %>
+<% end %>

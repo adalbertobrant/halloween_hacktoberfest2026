@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Memoriais</h1>
+  <a href="<%= new_memorial_path %>" class="btn btn-primary">Criar Memorial</a>
+</div>
+
+<% if @memorials.empty? %>
+  <p class="text-muted">Nenhum memorial criado ainda.</p>
+<% else %>
+  <div class="row">
+    <% @memorials.each do |m| %>
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= m.deceased_name %></h5>
+            <p class="card-text"><%= m.birth_date %> - <%= m.death_date %></p>
+            <p class="card-text"><small class="text-muted">Status: <%= m.status %></small></p>
+            <a href="<%= memorial_path(m) %>" class="btn btn-sm btn-outline-primary">Ver</a>
+            <% if m.page_slug %>
+              <a href="<%= public_memorial_path(m.page_slug) %>" class="btn btn-sm btn-outline-secondary">Página Pública</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<h1><%= @memorial.deceased_name %></h1>
+<p class="text-muted"><%= @memorial.birth_date %> - <%= @memorial.death_date %></p>
+<p><strong>Status:</strong> <%= @memorial.status %></p>
+
+<% if @memorial.title %>
+  <h2><%= @memorial.title %></h2>
+  <p><%= simple_format(@memorial.biography_summary) %></p>
+  <p><%= simple_format(@memorial.life_history) %></p>
+  <% if @memorial.quote %>
+    <blockquote class="blockquote"><p>"<%= @memorial.quote %>"</p></blockquote>
+  <% end %>
+<% end %>
+
+<a href="/" class="btn btn-secondary">Voltar</a>
+<% if @memorial.page_slug %>
+  <a href="<%= public_memorial_path(@memorial.page_slug) %>" class="btn btn-primary">Ver Página Pública</a>
+<% end %>

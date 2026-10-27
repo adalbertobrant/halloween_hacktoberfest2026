@@ -1,5 +1,4 @@
-# Multi-stage build leve para Rails
-FROM ruby:3.3-slim AS base
+FROM ruby:3.3-slim
 
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
@@ -7,22 +6,18 @@ RUN apt-get update -qq && \
     curl \
     git \
     libpq-dev \
-    nodejs \
-    npm \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Bundle install
-COPY Gemfile Gemfile.lock ./
-RUN bundle config set --local deployment 'false' && \
+# Instalar gems
+COPY Gemfile Gemfile.lock* ./
+RUN bundle config set --local without 'production' && \
     bundle install --jobs 4 --retry 3
 
-# Copy app
+# Copiar aplicação
 COPY . .
-
-# Precompile assets (se houver)
-RUN bundle exec rails assets:precompile 2>/dev/null || true
 
 EXPOSE 3000
 

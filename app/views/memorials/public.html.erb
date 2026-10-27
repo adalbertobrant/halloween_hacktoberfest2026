@@ -1,0 +1,35 @@
+<% if @memorial&.html_content.present? %>
+  <%= raw @memorial.html_content %>
+<% else %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Em Memória de <%= @memorial.deceased_name %></title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+    .header { text-align: center; padding: 40px 0; }
+    .content { background: white; padding: 40px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="header">
+      <h1>Em Memória de <%= @memorial.deceased_name %></h1>
+      <p><%= @memorial.birth_date %> - <%= @memorial.death_date %></p>
+    </div>
+    <% if @memorial.title %>
+      <h2><%= @memorial.title %></h2>
+      <p><%= simple_format(@memorial.biography_summary) %></p>
+      <p><%= simple_format(@memorial.life_history) %></p>
+      <% if @memorial.quote %>
+        <blockquote style="border-left: 3px solid #ccc; padding-left: 20px; font-style: italic;">"<%= @memorial.quote %>"</blockquote>
+      <% end %>
+    <% else %>
+      <p>Esta página está sendo processada pelos nossos agentes.</p>
+    <% end %>
+  </div>
+</body>
+</html>
+<% end %>
