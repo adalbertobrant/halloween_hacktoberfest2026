@@ -46,7 +46,7 @@ An open-source system for creating respectful memorial pages and notifying famil
 ### 1. Clone and configure
 
 ```bash
-git clone https://github.com/yourusername/halloween_hacktoberfest2026.git
+git clone https://github.com/adalbertobrant/halloween_hacktoberfest2026.git
 cd halloween_hacktoberfest2026
 cp .env.example .env
 ```
