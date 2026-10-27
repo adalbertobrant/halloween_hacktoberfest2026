@@ -4,7 +4,7 @@ ruby "3.4.12"
 
 # Rails
 gem "rails", "~> 8.0.0"
-gem "puma", "~> 6.4"
+gem "puma", ">= 7.2.1"
 gem "bootsnap", require: false
 
 # MongoDB
