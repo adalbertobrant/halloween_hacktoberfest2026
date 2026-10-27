@@ -4,7 +4,7 @@ ruby "3.3.13"
 
 # Rails
 gem "rails", "~> 8.0.0"
-gem "puma", "~> 6.4"
+gem "puma", "~> 7.2"
 gem "bootsnap", require: false
 
 # MongoDB
@@ -22,7 +22,7 @@ gem "httparty", "~> 0.22"
 # Segurança
 gem "rack-attack", "~> 6.7"
 gem "pundit", "~> 2.3"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 # Utilitários
 gem "dotenv-rails", "~> 3.1"
