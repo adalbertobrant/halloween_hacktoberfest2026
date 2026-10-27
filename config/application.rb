@@ -15,6 +15,8 @@ module MemorialApp
     config.time_zone = 'Brasilia'
     config.i18n.default_locale = 'pt-BR'
     
+    config.secret_key_base = ENV.fetch("SECRET_KEY_BASE") { "a" * 128 }
+    
     # Mongoid
     Mongoid.load!("./config/mongoid.yml") if File.exist?("./config/mongoid.yml")
   end
