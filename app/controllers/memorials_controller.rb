@@ -1,8 +1,6 @@
 require 'temporalio/client'
 
 class MemorialsController < ApplicationController
-  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
-  
   def index
     @memorials = Memorial.all.order_by(created_at: :desc)
   end
