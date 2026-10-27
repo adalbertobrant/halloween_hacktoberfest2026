@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.13"
+ruby "3.4.12"
 
 # Rails
 gem "rails", "~> 8.0.0"
@@ -22,7 +22,7 @@ gem "httparty", "~> 0.22"
 # Segurança
 gem "rack-attack", "~> 6.7"
 gem "pundit", "~> 2.3"
-gem "devise", "~> 4.9"
+gem "devise", ">= 5.0.4"
 
 # Utilitários
 gem "dotenv-rails", "~> 3.1"
