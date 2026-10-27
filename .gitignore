@@ -1,0 +1,49 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+
+# Dependencies
+/vendor/bundle
+.bundle
+
+# Node modules (if any)
+node_modules/
+
+# Docker
+docker-compose.override.yml
+
+# Credentials
+/config/master.key
+/config/credentials/*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# MongoDB data
+data/
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.bak
